@@ -117,21 +117,19 @@ final class Shop: IsPerson {
         self.name  = name
     }
     
-    // Maybe make the interface options as a static struct?
-}
+    // TODO: Maybe make the interface options as a static struct?
+} // EoC
 
 // Static funcs:
 extension Shop {
 
-	// TODO: Make an entry that keeps a list of all the names of the shopkeeps
-	/// Parses plist and returns a key (put in the shopkeeper to load) (PURE)
-	static func loadShop(keepName: String) -> Any {
+	static let shopFileName = "ShopKeepInfo.plist" 	// These match-up to the filename and
+	static let newKeepTemplate = "newKeepTemplate"	// main keys in the actual plist.
+	static let arrayName = "listOfShopKeepers"
 
-		/* Setup: */
-
-		// These match-up to the filename and main keys in the actual plist
-		let shopFileName = "ShopKeepInfo.plist"
-		let newKeepTemplate = "newKeepTemplate"
+	/** Loads a plist into a dict
+	- TODO: Make this into a try / catch?: */
+	static func loadPlist(shopFileName: String, newKeepTemplate: String) -> Dictionary<String, Any> {
 
 		// Logic fodder:
 		let plistPath: String = { // Get path:
@@ -156,18 +154,30 @@ extension Shop {
 			else { return nil }
 		}()
 
-		func grabArray() {}
-
-		/* Logic: */
-
-		// TODO: Make this into a try / catch?
+		// Logic:
 		if plDict == nil { fatalError("\(shopFileName) not found!") }
-		if plDict![keepName] == nil { fatalError("\(keepName) not found!") }
-		
-		return plDict![keepName]!
-		
+		else { return plDict! }
 	}
-}
+
+
+	/** Parses plist and returns a key (put in the shopkeeper to load) (PURE) */
+	static func loadShop(keepName: String, shopFileName: String, newKeepTemplate: String) -> Any {
+		let plDict = loadPlist(shopFileName: shopFileName, newKeepTemplate: newKeepTemplate)
+		if plDict[keepName] == nil { fatalError("\(keepName) not found!") }
+		return plDict[keepName]!
+	}
+
+
+	/** Auto sorts stuff into an enum:
+	- TODO: Make an entry that keeps a list of all the names of the shopkeeps */
+	static func loadArray(fromDictAny dict: Any) {
+
+		let myArray = loadPlist(shopFileName: shopFileName, newKeepTemplate: newKeepTemplate)[arrayName]
+
+
+	}
+
+} // EoC
 
 
 

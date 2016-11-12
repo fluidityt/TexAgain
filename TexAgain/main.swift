@@ -50,5 +50,7 @@ var menu = 0; while menu == 0 {
 }
 
 // TODO: Make an enum that reflects the dict keys?
-let b = Shop.loadShop(keepName: "Fred")
+let b = Shop.loadShop(keepName: "Fred",
+                      shopFileName: Shop.shopFileName,
+                      newKeepTemplate: Shop.newKeepTemplate)
 print(b)

@@ -124,7 +124,7 @@ final class Shop: IsPerson {
 extension Shop {
 
 	// TODO: Make an entry that keeps a list of all the names of the shopkeeps
-	/// Parses plist and returns a key (put in the shopkeeper to load)
+	/// Parses plist and returns a key (put in the shopkeeper to load) (PURE)
 	static func loadShop(keepName: String) -> Any {
 
 		/* Setup: */

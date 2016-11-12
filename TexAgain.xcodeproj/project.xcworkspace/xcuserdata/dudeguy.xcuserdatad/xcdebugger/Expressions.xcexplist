@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<VariablesViewState
+   version = "1.0">
+   <ContextStates>
+      <ContextState
+         contextName = "main:main.swift">
+      </ContextState>
+      <ContextState
+         contextName = "Shop2.buyItem(Item, from : inout Int) -&gt; ():main.swift">
+      </ContextState>
+   </ContextStates>
+</VariablesViewState>

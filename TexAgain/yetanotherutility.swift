@@ -8,7 +8,7 @@
 
 import Foundation
 
-func appendDict<T1, T2>(dict: [T1: T2], key: T1, value: T2) -> [T1: T2] {
+func appendDict<T1, T2>(_ dict: [T1: T2], key: T1, value: T2) -> [T1: T2] {
     var newDict = dict
     newDict[key] = value
     return newDict

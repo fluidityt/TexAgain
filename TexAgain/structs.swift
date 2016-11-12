@@ -17,17 +17,17 @@ typealias Inventory = [Item: Int]
 class HasInventory {
     var inventory: Inventory = [:]
     
-    func addItem(item: Item) {
+    func addItem(_ item: Item) {
         if inventory[item] == nil { inventory[item] = item.maxQty }
         else { print("Item already exists.. did you mean to buy instead?") }
     }
     
-    func removeItem(item: Item) { 
+    func removeItem(_ item: Item) { 
         if inventory[item] != nil { inventory[item] = nil }
         else { print("Item already gone.. did you mean to sell instead?") }
     }
     
-    func addInventory(newInventory: [Item: Int])    { inventory = newInventory }
+    func addInventory(_ newInventory: [Item: Int])    { inventory = newInventory }
     func removeInventory() { inventory = [:] }
 }
  
@@ -44,20 +44,20 @@ final class Player: IsPerson {
 
 final class Shop2: IsPerson {
 
-    func shopMod(inter: Int,_ dubber: Double) -> Int { return Int(Double(inter) * dubber) }
+    func shopMod(_ inter: Int,_ dubber: Double) -> Int { return Int(Double(inter) * dubber) }
    
     var shopSize: Double = 2.0 // maybe make this a sqFt based on item sqFt
     var shopPays:   Double = 0.5 // Maybe some mod of player's stats?
     var playerPays: Double = 1.0
     
-    func restock(item: Item){
+    func restock(_ item: Item){
         if inventory[item] != nil { inventory[item] = item.maxQty }
         else { print("Item doesn't exist-- .addItem first") }
     }
     
     func restockAll() {  for key in inventory.keys  {restock(key)}   }
 
-    func buyItem(item: Item, from player: Player) {
+    func buyItem(_ item: Item, from player: Player) {
         // TODO: Add player in pram
         // TODO: Add min/maxes in logic
         // TODO: Add choice / refuse
@@ -68,7 +68,7 @@ final class Shop2: IsPerson {
         
         if player.inventory[item]! <= 0 { print("error, player has no item to sell"); fatalError() } 
         // if player.money < price 
-        if (money >= price) && (inventory[item] < max) { 
+        if (money >= price) && (inventory[item]! < max) { 
             
             money -= price
             inventory[item]? += 1
@@ -83,13 +83,13 @@ final class Shop2: IsPerson {
         else { print ("- Sorry--no thanks") }
     }
     
-    func sellItem(item: Item, to player: Player) {
+    func sellItem(_ item: Item, to player: Player) {
         
         let price = shopMod(item.value, playerPays)
         let max = item.maxQty
         
         if player.inventory[item]! >= max { print(s, "You can't carry any more!"); return } 
-        if inventory[item] <= 0 { print(s, "I don't have any more"); return }
+        if inventory[item]! <= 0 { print(s, "I don't have any more"); return }
         
         if player.money < price { print ("You can't afford that!"); return }
             

@@ -1,4 +1,4 @@
-class ShopDialogueTemplate {
+struct ShopDialogueTemplate {
 
 	let shopName		= "my shop"
 	let keepName		= "augie"
@@ -16,7 +16,7 @@ class ShopDialogueTemplate {
 
 }
 
-class ShopDialogueTemplate2 {
+struct DialogueJeffery {
 
 	let shopName		= "Armor R Us"
 	let keepName		= "Jeffery"
@@ -31,5 +31,7 @@ class ShopDialogueTemplate2 {
 		case rumor2		=	"If only someone could save the prince..."
 
 		}
+
+	let dict: [Dialogue: String] = [.buyItem: Dialogue.buyItem.rawValue]
 
 }

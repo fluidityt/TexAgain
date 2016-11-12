@@ -1,4 +1,5 @@
 
+import Foundation
 
 // Menu stuff:
 var menu = 0; while menu == 0 {
@@ -47,7 +48,48 @@ var menu = 0; while menu == 0 {
     
     break
 }
+//
+// let path = NSBundle.mainBundle().pathForResource("GameData", ofType: "plist") //parse GameData.plist
+//        let dict:AnyObject = NSDictionary(contentsOfFile: path!)
+//        let gameDict:AnyObject = dict.objectForKey("GameSettings")!
+//        
 
 
+func loadShop(keepName: String) -> Dictionary<String, Any>? {
 
+	// Config for as we mod the plist manually
+	let shopFileName = "ShopKeepInfo.plist"
+	let newKeepTemplate = "newKeepTemplate"
 
+	func getPath(plistName: String = shopFileName) -> String {
+
+		let paths = NSSearchPathForDirectoriesInDomains(.documentDirectory,
+		                                                .userDomainMask, true)
+		let documentsPath = paths[0] as NSString
+		let plistPath = documentsPath.appendingPathComponent(plistName)
+
+		return plistPath
+	}
+
+	func grabPlist(plistPath: String = getPath()) -> Dictionary<String, Any>? {
+
+		// shopFileName Found:
+		if ( FileManager.default.fileExists(atPath: plistPath) ) {
+			let plDict1 = NSDictionary(contentsOfFile: getPath())!
+			var plDict2 = plDict1 as! Dictionary<String, Any>
+
+			plDict2[newKeepTemplate] = nil
+
+			return plDict2
+		}
+			// Not found:
+		else {
+			return nil
+		}
+	}
+
+	if grabPlist() == nil { fatalError("\(shopFileName) not found!") }
+
+	return grabPlist()
+	
+}

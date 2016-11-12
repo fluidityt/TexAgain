@@ -55,7 +55,9 @@ let b = Shop.loadShop(keepName: "Fred",
                       shopFileName: Shop.shopFileName,
                       newKeepTemplate: Shop.newKeepTemplate)
 
-print(Shop.loadArray(fromPlist: Shop.loadPlist(shopFileName: Shop.shopFileName, newKeepTemplate: Shop.newKeepTemplate)))
+//print(Shop.loadArray(fromPlist: Shop.loadPlist(shopFileName: Shop.shopFileName, newKeepTemplate: Shop.newKeepTemplate)))
+
+print(Shop.currentListOfKeeps)
 
 
 

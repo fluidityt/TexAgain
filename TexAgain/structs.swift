@@ -123,10 +123,6 @@ final class Shop: IsPerson {
 // Static funcs:
 extension Shop {
 
-	static let shopFileName = "ShopKeepInfo.plist" 	// These match-up to the filename and
-	static let newKeepTemplate = "newKeepTemplate"	// main keys in the actual plist.
-	static let arrayName = "listOfShopKeepers"
-
 	/** Loads a plist into a dict
 	- TODO: Make this into a try / catch?: */
 	static func loadPlist(shopFileName: String, newKeepTemplate: String) -> Dictionary<String, Any> {
@@ -170,7 +166,7 @@ extension Shop {
 
 	/** Auto sorts stuff into an enum:
 	- TODO: Make an entry that keeps a list of all the names of the shopkeeps */
-	static func loadArray(fromPlist plist: Any) {
+	static func loadArray(fromPlist plist: Any) -> [String]? {
 
 		let dict = loadPlist(shopFileName: shopFileName, newKeepTemplate: newKeepTemplate)
 
@@ -179,9 +175,24 @@ extension Shop {
 			for i in array {
 				print(i)
 			}
-
+			return array
 		}
+		else { return nil }
 	}
+
+
+	/* Fields: */
+	static let shopFileName = "ShopKeepInfo.plist" 	// These match-up to the filename and
+	static let newKeepTemplate = "newKeepTemplate"	// main keys in the actual plist.
+	static let arrayName = "listOfShopKeepers"
+
+	/* Properties: */
+	static var currentListOfKeeps: [String]? { get {
+		if let list = loadArray(fromPlist: loadPlist(shopFileName: shopFileName, newKeepTemplate: newKeepTemplate)) {
+			return list
+		} else { return nil }}
+	}
+
 }
 
 

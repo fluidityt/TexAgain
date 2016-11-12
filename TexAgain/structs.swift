@@ -1,4 +1,6 @@
 
+import Foundation
+
 func == (lhs: Item, rhs: Item) -> Bool  { if lhs.hashValue != rhs.hashValue { return false }; return true }
 
 struct Item: Hashable, Equatable { 
@@ -42,7 +44,7 @@ final class Player: IsPerson {
 }
 
 
-final class Shop2: IsPerson {
+final class Shop: IsPerson {
 
     func shopMod(_ inter: Int,_ dubber: Double) -> Int { return Int(Double(inter) * dubber) }
    
@@ -116,6 +118,55 @@ final class Shop2: IsPerson {
     }
     
     // Maybe make the interface options as a static struct?
+}
+
+// Static funcs:
+extension Shop {
+
+	// TODO: Make an entry that keeps a list of all the names of the shopkeeps
+	/// Parses plist and returns a key (put in the shopkeeper to load)
+	static func loadShop(keepName: String) -> Any {
+
+		/* Setup: */
+
+		// These match-up to the filename and main keys in the actual plist
+		let shopFileName = "ShopKeepInfo.plist"
+		let newKeepTemplate = "newKeepTemplate"
+
+		// Logic fodder:
+		let plistPath: String = { // Get path:
+
+			let paths = NSSearchPathForDirectoriesInDomains(.documentDirectory,
+			                                                .userDomainMask, true)
+			let documentsPath = paths[0] as NSString
+
+			return documentsPath.appendingPathComponent(shopFileName)
+		}()
+
+		// Returner:
+		let plDict: Dictionary<String, Any>? = {
+
+			if (FileManager.default.fileExists(atPath: plistPath)) {
+				let plDictV2 = NSDictionary(contentsOfFile: plistPath)!
+				var plDictV3 = plDictV2 as! Dictionary<String, Any>
+				plDictV3[newKeepTemplate] = nil // Because we don't need this
+
+				return plDictV3
+			}
+			else { return nil }
+		}()
+
+		func grabArray() {}
+
+		/* Logic: */
+
+		// TODO: Make this into a try / catch?
+		if plDict == nil { fatalError("\(shopFileName) not found!") }
+		if plDict![keepName] == nil { fatalError("\(keepName) not found!") }
+		
+		return plDict![keepName]!
+		
+	}
 }
 
 

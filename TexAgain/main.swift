@@ -4,10 +4,10 @@ import Foundation
 // Menu stuff:
 var menu = 0; while menu == 0 {
     // Globals!: call the shop whatever the scene name is... or if using SKNode then gShop
-    var gShop: Shop2?
+    var gShop: Shop?
     var gPlayer: Player?
     
-    func applyChanges(to shop: Shop2) { 
+    func applyChanges(to shop: Shop) {
         if gShop == nil { print("error, gShop is nil")
         } else { gShop = shop }
     }
@@ -17,7 +17,7 @@ var menu = 0; while menu == 0 {
   
     dmv: do {
         // Load a shop or set one up:
-        gShop = Shop2(money: 500, name: "My Shop")
+        gShop = Shop(money: 500, name: "My Shop")
         gShop!.addItem(bow)
         
         gPlayer = Player()
@@ -48,48 +48,7 @@ var menu = 0; while menu == 0 {
     
     break
 }
-//
-// let path = NSBundle.mainBundle().pathForResource("GameData", ofType: "plist") //parse GameData.plist
-//        let dict:AnyObject = NSDictionary(contentsOfFile: path!)
-//        let gameDict:AnyObject = dict.objectForKey("GameSettings")!
-//        
 
-
-func loadShop(keepName: String) -> Dictionary<String, Any>? {
-
-	// Config for as we mod the plist manually
-	let shopFileName = "ShopKeepInfo.plist"
-	let newKeepTemplate = "newKeepTemplate"
-
-	func getPath(plistName: String = shopFileName) -> String {
-
-		let paths = NSSearchPathForDirectoriesInDomains(.documentDirectory,
-		                                                .userDomainMask, true)
-		let documentsPath = paths[0] as NSString
-		let plistPath = documentsPath.appendingPathComponent(plistName)
-
-		return plistPath
-	}
-
-	func grabPlist(plistPath: String = getPath()) -> Dictionary<String, Any>? {
-
-		// shopFileName Found:
-		if ( FileManager.default.fileExists(atPath: plistPath) ) {
-			let plDict1 = NSDictionary(contentsOfFile: getPath())!
-			var plDict2 = plDict1 as! Dictionary<String, Any>
-
-			plDict2[newKeepTemplate] = nil
-
-			return plDict2
-		}
-			// Not found:
-		else {
-			return nil
-		}
-	}
-
-	if grabPlist() == nil { fatalError("\(shopFileName) not found!") }
-
-	return grabPlist()
-	
-}
+// TODO: Make an enum that reflects the dict keys?
+let b = Shop.loadShop(keepName: "Fred")
+print(b)

@@ -118,7 +118,7 @@ final class Shop: IsPerson {
     }
     
     // TODO: Maybe make the interface options as a static struct?
-} // EoC
+}
 
 // Static funcs:
 extension Shop {
@@ -170,14 +170,19 @@ extension Shop {
 
 	/** Auto sorts stuff into an enum:
 	- TODO: Make an entry that keeps a list of all the names of the shopkeeps */
-	static func loadArray(fromDictAny dict: Any) {
+	static func loadArray(fromPlist plist: Any) {
 
-		let myArray = loadPlist(shopFileName: shopFileName, newKeepTemplate: newKeepTemplate)[arrayName]
+		let dict = loadPlist(shopFileName: shopFileName, newKeepTemplate: newKeepTemplate)
 
+		if let array = dict[arrayName] as? [String] {
 
+			for i in array {
+				print(i)
+			}
+
+		}
 	}
-
-} // EoC
+}
 
 
 

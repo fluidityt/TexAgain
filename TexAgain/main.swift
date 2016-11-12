@@ -1,6 +1,6 @@
 
 import Foundation
-
+func menu() {
 // Menu stuff:
 var menu = 0; while menu == 0 {
     // Globals!: call the shop whatever the scene name is... or if using SKNode then gShop
@@ -48,9 +48,16 @@ var menu = 0; while menu == 0 {
     
     break
 }
+}
 
 // TODO: Make an enum that reflects the dict keys?
 let b = Shop.loadShop(keepName: "Fred",
                       shopFileName: Shop.shopFileName,
                       newKeepTemplate: Shop.newKeepTemplate)
-print(b)
+
+print(Shop.loadArray(fromPlist: Shop.loadPlist(shopFileName: Shop.shopFileName, newKeepTemplate: Shop.newKeepTemplate)))
+
+
+
+
+print(n)

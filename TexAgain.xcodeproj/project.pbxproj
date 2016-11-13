@@ -7,7 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		C101F46D1DD65D0200832EB4 /* dialogue dict.swift in Sources */ = {isa = PBXBuildFile; fileRef = C101F46C1DD65D0200832EB4 /* dialogue dict.swift */; };
+		C13F21FB1DD91C240043E7A1 /* composition.swift in Sources */ = {isa = PBXBuildFile; fileRef = C13F21FA1DD91C240043E7A1 /* composition.swift */; };
+		C13F21FD1DD91C510043E7A1 /* shop.swift in Sources */ = {isa = PBXBuildFile; fileRef = C13F21FC1DD91C510043E7A1 /* shop.swift */; };
 		C1C4A93A1DD4D2C7002E0438 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1C4A9391DD4D2C7002E0438 /* main.swift */; };
 		C1C4A9411DD4D31B002E0438 /* yetanotherutility.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1C4A9401DD4D31B002E0438 /* yetanotherutility.swift */; };
 		C1C4A9431DD4DA03002E0438 /* structs.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1C4A9421DD4DA03002E0438 /* structs.swift */; };
@@ -26,8 +27,11 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		C101F46C1DD65D0200832EB4 /* dialogue dict.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "dialogue dict.swift"; sourceTree = "<group>"; };
 		C116222B1DD77CD400D320C4 /* ShopKeepInfo.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = ShopKeepInfo.plist; path = ../../../../Documents/ShopKeepInfo.plist; sourceTree = "<group>"; };
+		C116222C1DD7972C00D320C4 /* File.strings */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; path = File.strings; sourceTree = "<group>"; };
+		C116222D1DD7974B00D320C4 /* TODO.rtf */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.rtf; path = TODO.rtf; sourceTree = "<group>"; };
+		C13F21FA1DD91C240043E7A1 /* composition.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = composition.swift; sourceTree = "<group>"; };
+		C13F21FC1DD91C510043E7A1 /* shop.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = shop.swift; sourceTree = "<group>"; };
 		C1C4A9361DD4D2C7002E0438 /* TexAgain */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = TexAgain; sourceTree = BUILT_PRODUCTS_DIR; };
 		C1C4A9391DD4D2C7002E0438 /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
 		C1C4A9401DD4D31B002E0438 /* yetanotherutility.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = yetanotherutility.swift; sourceTree = "<group>"; };
@@ -49,6 +53,8 @@
 			isa = PBXGroup;
 			children = (
 				C116222B1DD77CD400D320C4 /* ShopKeepInfo.plist */,
+				C116222C1DD7972C00D320C4 /* File.strings */,
+				C116222D1DD7974B00D320C4 /* TODO.rtf */,
 				C1C4A9381DD4D2C7002E0438 /* TexAgain */,
 				C1C4A9371DD4D2C7002E0438 /* Products */,
 			);
@@ -68,7 +74,8 @@
 				C1C4A9391DD4D2C7002E0438 /* main.swift */,
 				C1C4A9401DD4D31B002E0438 /* yetanotherutility.swift */,
 				C1C4A9421DD4DA03002E0438 /* structs.swift */,
-				C101F46C1DD65D0200832EB4 /* dialogue dict.swift */,
+				C13F21FC1DD91C510043E7A1 /* shop.swift */,
+				C13F21FA1DD91C240043E7A1 /* composition.swift */,
 			);
 			path = TexAgain;
 			sourceTree = "<group>";
@@ -131,7 +138,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C101F46D1DD65D0200832EB4 /* dialogue dict.swift in Sources */,
+				C13F21FD1DD91C510043E7A1 /* shop.swift in Sources */,
+				C13F21FB1DD91C240043E7A1 /* composition.swift in Sources */,
 				C1C4A93A1DD4D2C7002E0438 /* main.swift in Sources */,
 				C1C4A9411DD4D31B002E0438 /* yetanotherutility.swift in Sources */,
 				C1C4A9431DD4DA03002E0438 /* structs.swift in Sources */,

@@ -11,7 +11,7 @@ import Foundation
 final class Shop: IsPerson {
 	//	MARK: -
 
-	var shopSize: Double = 2.0 // maybe make this a sqFt based on item sqFt
+	var shopSize: Double = 2.0 // maybe make this a sq Ftd based on item sqFt
 	var shopPays:   Double = 0.5 // Maybe some mod of player's stats?
 	var playerPays: Double = 1.0
 

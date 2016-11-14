@@ -11,7 +11,7 @@ import Foundation
 func appendDict<T1, T2>(_ dict: [T1: T2], key: T1, value: T2) -> [T1: T2] {
     var newDict = dict
     newDict[key] = value
-    return newDict
+	return newDict
 }
 
 
@@ -23,4 +23,4 @@ func appendDict<T1, T2>(_ dict: [T1: T2], key: T1, value: T2) -> [T1: T2] {
 
 var gLines = 0; func wait(_ clear: Bool = false) {
 	_=readLine();	if clear { for i in 0...gLines { print("") } }
-}; ffunc clear() { for i in 0...gLines { print("") } }
+}; func clear() { for i in 0...gLines { print("") } }

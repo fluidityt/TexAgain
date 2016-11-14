@@ -5,30 +5,29 @@
 import Foundation
 
 
-	struct defaultsKeys {
-		static let keyOne = "firstStringKey"
-		static let keyTwo = "secondStringKey"
-	}
+struct DefaultKeys {
+		var keyOne = "firstStringKey"
+		var keyTwo = "secondStringKey"
+	//static let keyThree = "fun"
+}
+var defk1 = DefaultKeys()
+var defKeys = ["Hello": 45]
 
 
+
+func save<T>(z: T) {
 	let defaults = UserDefaults.standard
-
-	defaults.setValue("Some String Value",		forKey: defaultsKeys.keyOne)
-	defaults.setValue("Another String Value", forKey: defaultsKeys.keyTwo)
-
+	defaults.setValue(z, forKey: "MyData")
 	defaults.synchronize()
+}
 
-
+func load() -> Any {
 	let defaults2 = UserDefaults.standard
+	return defaults2.value(forKey: "MyData")!
+}
 
-	 if let stringOne = defaults2.string(forKey: defaultsKeys.keyOne){
-		print(stringOne) // Some String Value
-		}
-
-
-	if let stringTwo = defaults2.string(forKey: defaultsKeys.keyTwo) {
-		print(stringTwo) // Another String Value
-	}
+//save(z: defKeys)
+_=load()
 
 // MARK: -
 func intro() {
@@ -44,8 +43,6 @@ func intro() {
 	}
 
 }; // intro()
-
-
 
 func menutestagain() {
 	_ = Shop.loadShop(keepName: "Fred",

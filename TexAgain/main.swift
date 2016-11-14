@@ -1,22 +1,62 @@
 
+
 // TODO: Make an enum that reflects the dict keys?
 
 import Foundation
 
 
+	struct defaultsKeys {
+		static let keyOne = "firstStringKey"
+		static let keyTwo = "secondStringKey"
+	}
+
+
+	let defaults = UserDefaults.standard
+
+	defaults.setValue("Some String Value",		forKey: defaultsKeys.keyOne)
+	defaults.setValue("Another String Value", forKey: defaultsKeys.keyTwo)
+
+	defaults.synchronize()
+
+
+	let defaults2 = UserDefaults.standard
+
+	 if let stringOne = defaults2.string(forKey: defaultsKeys.keyOne){
+		print(stringOne) // Some String Value
+		}
+
+
+	if let stringTwo = defaults2.string(forKey: defaultsKeys.keyTwo) {
+		print(stringTwo) // Another String Value
+	}
 
 // MARK: -
+func intro() {
 
-let b = Shop.loadShop(keepName: "Fred",
-                      shopFileName: Shop.shopFileName,
-                      newKeepTemplate: Shop.newKeepTemplate)
+	lineCount: do {
+		for i in 0...100 { print(i) }
+		print("What top number do you see?")
+		let result = Int(readLine()!)
+		gLines = 100-result!
 
-//print(Shop.loadArray(fromPlist: Shop.loadPlist(shopFileName: Shop.shopFileName, newKeepTemplate: Shop.newKeepTemplate)))
+		clear()
+		print("hi")
+	}
 
-print(Shop.currentListOfKeeps)
+}; // intro()
 
 
 
+func menutestagain() {
+	_ = Shop.loadShop(keepName: "Fred",
+	                      shopFileName: Shop.shopFileName,
+	                      newKeepTemplate: Shop.newKeepTemplate)
+
+	print(Shop.loadArray(fromPlist: Shop.loadPlist(shopFileName: Shop.shopFileName, newKeepTemplate: Shop.newKeepTemplate))!)
+
+	print(Shop.currentListOfKeeps!)
+	
+}
 
 func menu() {
 	// Menu stuff:

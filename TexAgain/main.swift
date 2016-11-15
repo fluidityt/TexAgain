@@ -23,78 +23,98 @@ var gSaveFile = UserDefaults.standard
 class GameData: Sav,er {
 
 
-	// MARK: - Static stuff:
-
-	private init(newOne: Bool ) {}
-
-	static var instance = GameData(newOne: true)
-
-	/// Update instance
-	static func fetchFromFile() {
-
-		// Coder stuff:
-		let unusableGameData = gSaveFile.object(forKey: "GameData") as! Data
-		let usableGameData = NSKeyedUnarchiver
-			.unarchiveObject(with: unusableGameData) as! GameData
-
-		GameData.instance = usableGameData
-	}
-
-
-	// MARK: - Data to save:
+// MARK: - Data to save:
 
 	var bank = gBank
 
 
-	// MARK: - Methods:
+// MARK: - Keys:
 
-	func say() { print(bank)	}
-
-	/// Mutate our fields:
-	func saveSelfToFile() {
-
-		// Fetch new data from globes:
-		bank = gBank
-
-		// Coder stuff:
-		let newlySavedSelf: Data = NSKeyedArchiver.archivedData(withRootObject: self)
-		gSaveFile.set(newlySavedSelf, forKey: "GameData")
+	private struct Keys {
+		static let
+		coder = "GameData",
+		bank = "bank"
 	}
 
 
-	// MARK: - Coder stuff:
+// MARK: - Data + Keys (encoder):
 
-	/// Save from self:
+	/// Save data to a key to a file:
 	func encode(with aCoder: NSCoder) {
-		let gameSaver = aCoder
 
-		gameSaver.encode(bank, forKey: "bank")
+		aCoder.encode(bank, forKey: Keys.bank)
 	}
 
-	/// Used in required init:
+
+// MARK: - Inits:
+
+	/// Basic singleton init:
+	private init(newOne: Bool ) {}
+
+	// Loading part1:
 	init(loadAll: Bool,
 	     bank: Int) {
 
 		self.bank = bank
 	}
 
-	/// Load from save:
+	/// Loading part2:
 	required convenience init?(coder aDecoder: NSCoder) {
+
 		let savedData = aDecoder // For sanity
 
-		let bank = savedData.decodeInteger(forKey: "bank")
+		let lBank = savedData.decodeInteger(forKey: Keys.bank)
 
 		self.init(loadAll: true,
-		          bank: bank)
+		          bank: lBank)
 	}
+
+
+// MARK: - Static stuff:
+
+	// TODO: Turn this private once you don't fail:
+	/// Singleton (used when .loading() from a data class)
+	private static var instance = GameData(newOne: true)
+
+	// TODO: Make this multi-saveable: (refactor saveFile to userDef and then saveFile is key)
+
+
+	/// Update fields then save to file
+	static func saveData (instance i: GameData = GameData.instance,
+	                     to saveFile: UserDefaults) {
+
+		// Fetch new data from globes because we need latest data to save:
+		i.bank = gBank // Could be bank.save()
+
+		// Coder stuff:
+		let unusableUpdatedGameData: Data = NSKeyedArchiver.archivedData(withRootObject: i)
+
+		// Save to file!:
+		saveFile.set(unusableUpdatedGameData, forKey: Keys.coder)
+	}
+
+	/// Load, decode, then update instance's fields:
+	static func loadData (saveFile: UserDefaults = gSaveFile) -> GameData {
+
+		// Coder stuff:
+		let unusableLoadedGameData = saveFile.object(forKey: Keys.coder) as! Data
+		let usableLoadedGameData = NSKeyedUnarchiver
+			.unarchiveObject(with: unusableLoadedGameData) as! GameData
+
+		instance = usableLoadedGameData
+
+		return instance
+	}
+
 
 }
 
+gBank = 100
+//GameData.saveData()
+let data = GameData.loadData()
 
+print(data.bank)
 
-gBank -= 100
-
-print(gBank)
 
 
 

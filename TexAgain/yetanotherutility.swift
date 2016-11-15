@@ -24,3 +24,15 @@ func appendDict<T1, T2>(_ dict: [T1: T2], key: T1, value: T2) -> [T1: T2] {
 var gLines = 0; func wait(_ clear: Bool = false) {
 	_=readLine();	if clear { for i in 0...gLines { print("") } }
 }; func clear() { for i in 0...gLines { print("") } }
+
+
+typealias Sav = NSObject
+typealias er = NSCoding
+
+protocol SaveAble {
+	var uuid: String { get }
+	func save()
+	static func load()
+}
+
+func getUUID() -> String { return UUID().uuidString }

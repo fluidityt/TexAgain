@@ -1,258 +1,101 @@
 
-
-// TODO: Make an enum that reflects the dict keys?
-// TODO: Make a sharedpref that contains all the Team UUID to load from.. then match?
-
-
 import Foundation
 
-class Team {
+/* what I need:
+
+- shop gold and rare item data
+
+- player stats, items, quests, etc
+
+- true/false stuff for special events in old towns
+
+- dialogue ID for npc 
 
 
-	/* Fields: */	var
-		id: Int,
-		name: String,
-		shortname: String,
-		// FIXME: Argh pretend this is in the init
-		key: String = "playerTeam"
+things for /random unknown data\ will be different!
+*/
 
-	init(id: Int, name: String, shortname: String) {		self.id = id;		self.name = name;		self.shortname = shortname}
+// Globes:
+var gBank = 200
+var gSaveFile = UserDefaults.standard
+
+// Saver:
+class GameData: Sav,er {
+
+
+	// MARK: - Static stuff:
+
+	private init(newOne: Bool ) {}
+
+	static var instance = GameData(newOne: true)
+
+	/// Update instance
+	static func fetchFromFile() {
+
+		// Coder stuff:
+		let unusableGameData = gSaveFile.object(forKey: "GameData") as! Data
+		let usableGameData = NSKeyedUnarchiver
+			.unarchiveObject(with: unusableGameData) as! GameData
+
+		GameData.instance = usableGameData
+	}
+
+
+	// MARK: - Data to save:
+
+	var bank = gBank
+
+
+	// MARK: - Methods:
+
+	func say() { print(bank)	}
+
+	/// Mutate our fields:
+	func saveSelfToFile() {
+
+		// Fetch new data from globes:
+		bank = gBank
+
+		// Coder stuff:
+		let newlySavedSelf: Data = NSKeyedArchiver.archivedData(withRootObject: self)
+		gSaveFile.set(newlySavedSelf, forKey: "GameData")
+	}
+
+
+	// MARK: - Coder stuff:
+
+	/// Save from self:
+	func encode(with aCoder: NSCoder) {
+		let gameSaver = aCoder
+
+		gameSaver.encode(bank, forKey: "bank")
+	}
+
+	/// Used in required init:
+	init(loadAll: Bool,
+	     bank: Int) {
+
+		self.bank = bank
+	}
+
+	/// Load from save:
+	required convenience init?(coder aDecoder: NSCoder) {
+		let savedData = aDecoder // For sanity
+
+		let bank = savedData.decodeInteger(forKey: "bank")
+
+		self.init(loadAll: true,
+		          bank: bank)
+	}
+
 }
 
-extension Team {
-
-	// For loading and such...
-	static var listOfTeamKeys = ["playerTeam", "enemyTeam"]
-	static let listOfTeamKeysKey = "TeamKeys"
-
-	// Temporary class for saving / loading to Team
-	class TeamData: Sav,er {
-
-		var id = 2
-		var name = ""
-		var shortname = ""
-		var uuid: String = ""
-
-		// Step 1:
-		init(uuid: String) {
-			self.uuid = uuid
-		}
-
-		// What I really need to transfer to the parent object:
-		init(id: Int, name: String, shortname: String) {
-			self.id = id;		self.name = name;		self.shortname = shortname
-		}
-
-		// How I'm gonna get it pt1:
-		required convenience init(coder aDecoder: NSCoder) {
-			let id = aDecoder.decodeInteger(forKey: "id") as Int
-			let name = aDecoder.decodeObject(forKey: "name") as! String
-			let shortname = aDecoder.decodeObject(forKey: "shortname") as! String
-
-			self.init(id: id, name: name, shortname: shortname)
-		}
-
-		// How I'm gonna get it pt2:
-		func encode(with aCoder: NSCoder) {
-			aCoder.encode(id, forKey: "id")
-			aCoder.encode(name, forKey: "name")
-			aCoder.encode(shortname, forKey: "shortname")
-		}
-
-		// How I'm gonna get it pt3:
-		func load() -> TeamData {
-			let userDefaults = UserDefaults.standard
-			let decoded  = userDefaults.object(forKey: self.uuid) as! Data
-			let decodedTeam = NSKeyedUnarchiver.unarchiveObject(with: decoded) as! TeamData
-			return decodedTeam
-		}
-	}
-
-	// Team.load()
-	func load() {
-		let teamerSave1 = TeamData(uuid: self.uuid)
 
 
-		TeamData.load()
+gBank -= 100
 
-	}
-
-	func save() {
-		let userDefaults = UserDefaults.standard
-
-		// Store the identifiers for all of our teams into a key (that we can read and match later):
-		userDefaults.set(Team.listOfTeamKeys, forKey: Team.listOfTeamKeysKey)
-
-
-		let encodedData: Data = NSKeyedArchiver.archivedData(withRootObject: self)
-
-		userDefaults.set(encodedData, forKey: self.uuid)
-		userDefaults.synchronize()
-	}
-}
+print(gBank)
 
 
 
-
-
-
-
-
-	func yantest32() {
-		// MARK: -
-		//func yantest2() {
-		//	class Team: NSObject, NSCoding {
-		//
-		//		static let key = "team"
-		//
-		//		var id: Int!
-		//		var name: String!
-		//		var shortname: String!
-		//
-		//		init(id: Int, name: String, shortname: String) {
-		//			self.id = id
-		//			self.name = name
-		//			self.shortname = shortname
-		//
-		//		}
-		//
-		//		required convenience init(coder aDecoder: NSCoder) {
-		//			let id = aDecoder.decodeInteger(forKey: "id")
-		//			let name = aDecoder.decodeObject(forKey: "name") as! String
-		//			let shortname = aDecoder.decodeObject(forKey: "shortname") as! String
-		//			self.init(id: id, name: name, shortname: shortname)
-		//		}
-		//
-		//		func encode(with aCoder: NSCoder) {
-		//			aCoder.encode(id, forKey: "id")
-		//			aCoder.encode(name, forKey: "name")
-		//			aCoder.encode(shortname, forKey: "shortname")
-		//		}
-		//	}
-		//
-		//	var userDefaults = UserDefaults.standard
-		//
-		//	func archive(team: Team) {
-		//		let encodedData: Data = NSKeyedArchiver.archivedData(withRootObject: team)
-		//		userDefaults.set(encodedData, forKey: Team.key)
-		//		userDefaults.synchronize()
-		//	}
-		//
-		//	func unArchive() -> [Team] {
-		//		let decoded  = userDefaults.object(forKey: Team.key) as! Data
-		//		let decodedTeams = NSKeyedUnarchiver.unarchiveObject(with: decoded) as! [Team]
-		//		return decodedTeams
-		//	}
-		//
-		//let teamOne = Team(id: 1, name: "TeamOne", shortname: "t1")
-		//archive(team: teamOne)
-		//
-		//let teamOneCopy = unArchive()
-		//
-		//
-		//
-		//
-		//}
-		//yantest2()
-	}
-	// MARK: -
-	func yantest1() {
-		struct DefaultKeys {
-			var keyOne = "firstStringKey"
-			var keyTwo = "secondStringKey"
-			//static let keyThree = "fun"
-		}
-		var defk1 = DefaultKeys()
-		var defKeys = ["Hello": 45]
-
-
-
-		func save<T>(z: T) {
-			let defaults = UserDefaults.standard
-			defaults.setValue(z, forKey: "MyData")
-			defaults.synchronize()
-		}
-
-		func load() -> Any {
-			let defaults2 = UserDefaults.standard
-			return defaults2.value(forKey: "MyData")!
-		}
-
-		//save(z: defKeys)
-		_=load()
-	}
-	// MARK: -
-	func intro() {
-
-		lineCount: do {
-			for i in 0...100 { print(i) }
-			print("What top number do you see?")
-			let result = Int(readLine()!)
-			gLines = 100-result!
-
-			clear()
-			print("hi")
-		}
-
-	}; // intro()
-	// MARK: -
-	func menutestagain() {
-		_ = Shop.loadShop(keepName: "Fred",
-		                  shopFileName: Shop.shopFileName,
-		                  newKeepTemplate: Shop.newKeepTemplate)
-
-		print(Shop.loadArray(fromPlist: Shop.loadPlist(shopFileName: Shop.shopFileName, newKeepTemplate: Shop.newKeepTemplate))!)
-
-		print(Shop.currentListOfKeeps!)
-
-	}
-	// MARK: -
-	func menu() {
-		// Menu stuff:
-		var menu = 0; while menu == 0 {
-			// Globals!: call the shop whatever the scene name is... or if using SKNode then gShop
-			var gShop:	 Shop?
-			var gPlayer: Player?
-
-			func applyChanges(to shop: Shop) {
-				if gShop == nil { print("error, gShop is nil")
-				} else { gShop = shop }
-			}
-
-			// Handy items:
-			let bow = Item(name: "Bow", value: 50, maxQty: 3)
-
-			dmv: do {
-				// Load a shop or set one up:
-				gShop = Shop(money: 500, name: "My Shop")
-				gShop!.addItem(bow)
-
-				gPlayer = Player()
-				gPlayer!.inventory[bow] = 1
-			}
-
-			tb: do {
-				/* Clicked "sell item" node: */
-				print(c, "which item to sell?")
-
-				/* User clicks Bow: */
-				let itemSelected = bow
-				gShop!.buyItem(bow, from: gPlayer!)
-				gShop!.sellItem(bow, to: gPlayer!)
-				
-				printers: do { print(n,n)
-					print(l, "Player's Bow Count:", gPlayer!.inventory[bow]!)
-					print(l, "Player's money:", gPlayer!.money)
-					print (l, "keep money:", gShop!.money)
-					print(l, "Keeps bow count:", gShop!.inventory[bow]!)
-					print(n,n) }
-			}
-			
-			update: do {
-				
-			}
-			
-			break
-		}
-}
-
+print(n)
